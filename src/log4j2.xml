@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">
+			%d{MM-dd-yyyy HH:mm:ss} %-5p transaction-id=%X{transactionId} %c{3}:%L - %m%n
+		</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT"
+			follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		<!-- Rolling File Appender -->
+		<RollingFile name="FileAppender" fileName="logs/app.log"
+			filePattern="logs/app-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<Pattern>${LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="20MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="3" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="com.tutorials.apachecxf" level="info"
+			additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="FileAppender" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="FileAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
